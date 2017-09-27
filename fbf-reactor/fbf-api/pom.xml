@@ -14,12 +14,13 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>4.3.1.RELEASE</spring.version>
-        <jackson.version>2.7.5</jackson.version>
-        <logback.version>1.1.7</logback.version>
-    </properties>
+		<spring.version>4.3.1.RELEASE</spring.version>
+		<jackson.version>2.7.5</jackson.version>
+		<logback.version>1.1.7</logback.version>
+		<failOnMissingWebXml>false</failOnMissingWebXml>
+	</properties>
 	<dependencies>
-	<dependency>
+		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>fbf-model</artifactId>
 			<version>${project.parent.version}</version>
@@ -47,10 +48,22 @@
 			<scope>provided</scope>
 		</dependency>
 		<!-- logging -->
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
 	</dependencies>
+	
+	<build>
+    <plugins>
+        <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+                <source>1.8</source>
+                <target>1.8</target>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
 </project>
