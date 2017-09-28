@@ -1,4 +1,4 @@
-package org.fbf.api;
+package org.fbf.api.controller;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.fbf.model.Greeting;

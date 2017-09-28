@@ -8,5 +8,6 @@
   <modules>
     <module>fbf-model</module>
     <module>fbf-api</module>
+    <module>fbf-service</module>
   </modules>
 </project>

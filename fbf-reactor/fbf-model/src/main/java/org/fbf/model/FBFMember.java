@@ -5,6 +5,7 @@ package org.fbf.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Access;
@@ -37,6 +38,8 @@ public class FBFMember implements Serializable {
 	private MemberStatus memberStatus;
 	private AuditInfo auditInfo;
 
+	private List<Dependant>dependants;
+	
 	public String getFbfMemberIdentifier() {
 		return fbfMemberIdentifier;
 	}
@@ -117,6 +120,14 @@ public class FBFMember implements Serializable {
 
 	public void setAuditInfo(AuditInfo auditInfo) {
 		this.auditInfo = auditInfo;
+	}
+
+	public List<Dependant> getDependants() {
+		return dependants;
+	}
+
+	public void setDependants(List<Dependant> dependants) {
+		this.dependants = dependants;
 	}
 
 }
