@@ -6,22 +6,24 @@ package org.fbf.service;
 import java.util.List;
 
 import org.fbf.model.FBFMember;
+import org.fbf.service.exception.FBFMemberDuplicateException;
 
 /**
- * @author amushate
- * 29 Sep,2017
+ * @author amushate 29 Sep,2017
  */
+
 public class FBFMemberServiceImpl implements FBFMemberService {
 
-	/* (non-Javadoc)
-	 * @see org.fbf.service.FBFMemberService#createMember(org.fbf.model.FBFMember)
-	 */
+	
 	public FBFMember createMember(FBFMember fbfMember) {
-		// TODO Auto-generated method stub
+		if(verifyMemberExists(fbfMember.getNationalId())){
+			throw new FBFMemberDuplicateException(String.format("Member with national id '%s' already exists",fbfMember.getNationalId()));
+		}
 		return null;
-	}
+	}	
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see org.fbf.service.FBFMemberService#getActiveMembers()
 	 */
 	public List<FBFMember> getActiveMembers() {
@@ -29,15 +31,20 @@ public class FBFMemberServiceImpl implements FBFMemberService {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.fbf.service.FBFMemberService#updateMember(org.fbf.model.FBFMember)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.fbf.service.FBFMemberService#updateMember(org.fbf.model.FBFMember)
 	 */
 	public FBFMember updateMember(FBFMember fbfMember) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.fbf.service.FBFMemberService#deleteMember(int)
 	 */
 	public boolean deleteMember(int fbfMemberId) {
@@ -45,12 +52,19 @@ public class FBFMemberServiceImpl implements FBFMemberService {
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.fbf.service.FBFMemberService#findMember(int)
 	 */
 	public FBFMember findMember(int fbfMemberId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	private boolean verifyMemberExists(String nationalId) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

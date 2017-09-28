@@ -54,7 +54,7 @@
 			<version>${logback.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>${project.parent.groupId}</groupId>
+			<groupId>fbf-reactor</groupId>
 			<artifactId>fbf-service</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
