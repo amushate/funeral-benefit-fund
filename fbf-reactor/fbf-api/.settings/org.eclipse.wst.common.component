@@ -8,6 +8,9 @@
         <dependent-module archiveName="fbf-model-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/fbf-model/fbf-model">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="fbf-service-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/fbf-service/fbf-service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="fbf-api"/>
         <property name="java-output-path" value="/fbf-api/target/classes"/>
     </wb-module>
