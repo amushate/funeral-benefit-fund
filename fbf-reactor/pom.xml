@@ -9,5 +9,6 @@
     <module>fbf-model</module>
     <module>fbf-api</module>
     <module>fbf-service</module>
+    <module>fbf-dao</module>
   </modules>
 </project>
