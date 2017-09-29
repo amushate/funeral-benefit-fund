@@ -14,6 +14,8 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 import org.fbf.enums.Gender;
 import org.fbf.enums.MemberStatus;
@@ -122,6 +124,8 @@ public class FBFMember implements Serializable {
 		this.auditInfo = auditInfo;
 	}
 
+	@OneToMany(orphanRemoval=true)
+	@JoinColumn(name="fbfMemberId")
 	public List<Dependant> getDependants() {
 		return dependants;
 	}
