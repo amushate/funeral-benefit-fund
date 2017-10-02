@@ -1,4 +1,9 @@
 package org.fbf.model;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 public class Greeting {
 
     private final long id;
@@ -9,6 +14,8 @@ public class Greeting {
         this.content = content;
     }
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public long getId() {
         return id;
     }

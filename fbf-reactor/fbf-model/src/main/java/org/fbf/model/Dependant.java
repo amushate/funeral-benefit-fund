@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -30,6 +33,8 @@ public class Dependant {
 		this.fbfMemberIdentifier = fbfMemberIdentifier;
 	}
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Long getDependantId() {
 		return dependantId;
 	}
@@ -62,6 +67,7 @@ public class Dependant {
 		this.dob = dob;
 	}
 
+	@ManyToOne
 	public RelationShip getRelationShip() {
 		return relationShip;
 	}

@@ -4,6 +4,7 @@
 package org.fbf.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * @author amushate 29 Sep,2017
@@ -11,6 +12,7 @@ import javax.persistence.Entity;
 @Entity
 public class RelationShip {
 	
+	@Id
 	private String relationShipType;
 
 	public String getRelationShipType() {

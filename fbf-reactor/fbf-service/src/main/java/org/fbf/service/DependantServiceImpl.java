@@ -6,10 +6,12 @@ package org.fbf.service;
 import java.util.List;
 
 import org.fbf.model.Dependant;
+import org.springframework.stereotype.Service;
 
 /**
  * @author amushate 29 Sep,2017
  */
+@Service
 public class DependantServiceImpl implements DependantService {
 
 	/*

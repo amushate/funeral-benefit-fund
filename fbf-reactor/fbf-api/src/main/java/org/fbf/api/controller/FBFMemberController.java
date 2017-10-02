@@ -4,30 +4,30 @@ import java.util.List;
 
 import org.fbf.model.FBFMember;
 import org.fbf.service.FBFMemberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 
  * @author amushate 28 Sep,2017
  */
-@RestController("/members")
+@RestController
+@RequestMapping(value = "/members")
 public class FBFMemberController {
 
+	@Autowired
 	private FBFMemberService service;
-
-	public FBFMemberController(FBFMemberService service) {
-		this.service = service;
-	}
 
 	@PostMapping
 	public FBFMember createMember(@RequestBody final FBFMember fbfMember) {
-		FBFMember createMember = service.createMember(fbfMember);
-		return createMember;
+		return service.createMember(fbfMember);
 	}
 	
 	@PutMapping
@@ -36,12 +36,12 @@ public class FBFMemberController {
 	}
 
 	@DeleteMapping
-	public boolean deleteMember(@RequestBody final Long fbfMemberId){
+	public boolean deleteMember(@PathVariable final Long fbfMemberId){
 		return service.deleteMember(fbfMemberId);
 	}
 	
 	@GetMapping(path="/{fbfMemberId}")
-	public FBFMember findMember(@RequestBody final Long fbfMemberId){
+	public FBFMember findMember(@PathVariable final Long fbfMemberId){
 		return service.findMember(fbfMemberId);
 	}
 	

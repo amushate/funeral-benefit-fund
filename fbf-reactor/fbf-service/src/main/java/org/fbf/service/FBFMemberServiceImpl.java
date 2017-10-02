@@ -11,19 +11,18 @@ import org.fbf.enums.MemberStatus;
 import org.fbf.service.exception.FBFMemberDuplicateException;
 import org.fbf.service.exception.FBFMemberIllegalArgumentException;
 import org.fbf.service.exception.FBFMemberResourceNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author amushate 29 Sep,2017
  */
-
+@Service
 public class FBFMemberServiceImpl implements FBFMemberService {
 
+	@Autowired
 	private FBFMemberRepository fbfMemberRepository;
-	
-	public FBFMemberServiceImpl(final FBFMemberRepository fbfMemberRepository){
-		this.fbfMemberRepository=fbfMemberRepository;
-	}
-	
+		
 	public FBFMember createMember(FBFMember fbfMember) {
 		if(fbfMember==null){
 			throw new FBFMemberIllegalArgumentException(String.format("Member cannot be null"));
