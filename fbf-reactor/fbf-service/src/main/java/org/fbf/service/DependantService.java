@@ -16,10 +16,10 @@ public interface DependantService {
 
 	Dependant addDependant(Long fbfMemberId, Dependant newdependant);
 
-	Dependant removeDependant(Long fbfMemberId, Long dependantid);
+	Dependant removeDependant(Long dependantid);
 
-	Dependant updateDependant(Long fbfMemberId, Dependant rawdependant);
+	Dependant updateDependant(Dependant rawdependant);
 
-	List<Dependant> findDependantById(Long dependantid);
+	Dependant findDependantById(Long dependantid);
 
 }

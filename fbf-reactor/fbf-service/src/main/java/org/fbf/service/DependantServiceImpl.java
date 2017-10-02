@@ -5,7 +5,12 @@ package org.fbf.service;
 
 import java.util.List;
 
+import org.fbf.dao.repositories.DependantRepository;
 import org.fbf.model.Dependant;
+import org.fbf.model.FBFMember;
+import org.fbf.service.exception.FBFMemberDuplicateException;
+import org.fbf.service.exception.FBFMemberResourceNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,63 +19,59 @@ import org.springframework.stereotype.Service;
 @Service
 public class DependantServiceImpl implements DependantService {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.fbf.service.DependantService#findDependantsByIdMember(java.lang.Long)
-	 */
+	@Autowired
+	private DependantRepository dependantRepository;
+	
+	@Autowired
+	private FBFMemberService fbfMemberService;
+	
 	@Override
 	public List<Dependant> findDependantsByIdMember(Long fbfMemberId) {
-		// TODO Auto-generated method stub
-		return null;
+		FBFMember fbfMember = fbfMemberService.findMember(fbfMemberId);
+		if(fbfMember==null){
+			throw new FBFMemberResourceNotFoundException("FBFMember with id '"+fbfMemberId+"' does not exist.");
+		}
+		if(fbfMember.getDependants()==null||fbfMember.getDependants().isEmpty()){
+			throw new FBFMemberResourceNotFoundException("No dependants found for FBFMember with id '"+fbfMemberId+"'.");
+		}
+		return fbfMember.getDependants();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.fbf.service.DependantService#addDependant(java.lang.Long,
-	 * org.fbf.model.Dependant)
-	 */
 	@Override
 	public Dependant addDependant(Long fbfMemberId, Dependant newdependant) {
-		// TODO Auto-generated method stub
-		return null;
+		FBFMember fbfMember = fbfMemberService.findMember(fbfMemberId);
+		Dependant dependant = dependantRepository.findByNationalId(newdependant.getNationalId());
+		if(dependant!=null){
+			throw new FBFMemberDuplicateException(String.format("Dependant with national Id '%s' already exist.",newdependant.getNationalId()));
+		}
+		newdependant.setFbfMember(fbfMember);		
+		return dependantRepository.save(newdependant);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.fbf.service.DependantService#removeDependant(java.lang.Long,
-	 * java.lang.Long)
-	 */
 	@Override
-	public Dependant removeDependant(Long fbfMemberId, Long dependantid) {
-		// TODO Auto-generated method stub
-		return null;
+	public Dependant removeDependant(Long dependantid) {
+		Dependant dependant = findDependantById(dependantid);
+		dependantRepository.delete(dependant);
+		return dependant;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.fbf.service.DependantService#updateDependant(java.lang.Long,
-	 * org.fbf.model.Dependant)
-	 */
 	@Override
-	public Dependant updateDependant(Long fbfMemberId, Dependant rawdependant) {
-		// TODO Auto-generated method stub
-		return null;
+	public Dependant updateDependant(Dependant rawdependant) {
+		Dependant dependant = findDependantById(rawdependant.getDependantId());
+		dependant.setDob(rawdependant.getDob());
+		dependant.setName(rawdependant.getName());
+		dependant.setSurname(rawdependant.getSurname());
+		dependant.setRelationShip(rawdependant.getRelationShip());
+		return dependantRepository.save(dependant);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.fbf.service.DependantService#findDependantById(java.lang.Long)
-	 */
 	@Override
-	public List<Dependant> findDependantById(Long dependantid) {
-		// TODO Auto-generated method stub
-		return null;
+	public Dependant findDependantById(Long dependantid) {
+		Dependant dependant = dependantRepository.findOne(dependantid);
+		if(dependant==null){
+			throw new FBFMemberResourceNotFoundException("Cannot find dependent with dependant ID:"+dependantid);
+		}
+		return dependant;
 	}
 
 }

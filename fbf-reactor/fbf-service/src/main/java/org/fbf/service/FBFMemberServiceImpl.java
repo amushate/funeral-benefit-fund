@@ -30,6 +30,7 @@ public class FBFMemberServiceImpl implements FBFMemberService {
 		if(verifyMemberExists(fbfMember.getNationalId())){
 			throw new FBFMemberDuplicateException(String.format("Member with national id '%s' already exists",fbfMember.getNationalId()));
 		}
+		fbfMember.setMemberStatus(MemberStatus.PA);
 		return fbfMemberRepository.save(fbfMember);
 	}	
 

@@ -35,7 +35,7 @@ public class FBFMember implements Serializable {
 	private String fbfMemberIdentifier = UUID.randomUUID().toString();
 	private Long fbfMemberId;
 	private String firstName;
-	private String Surname;
+	private String surname;
 	private Gender gender;
 	private String nationalId;
 	private String employeeId;
@@ -71,13 +71,7 @@ public class FBFMember implements Serializable {
 		this.firstName = firstName;
 	}
 
-	public String getSurname() {
-		return Surname;
-	}
-
-	public void setSurname(String surname) {
-		Surname = surname;
-	}
+	
 
 	public Gender getGender() {
 		return gender;
@@ -137,6 +131,14 @@ public class FBFMember implements Serializable {
 
 	public void setDependants(List<Dependant> dependants) {
 		this.dependants = dependants;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
 }

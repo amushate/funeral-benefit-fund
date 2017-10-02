@@ -24,6 +24,7 @@ public class Dependant {
 	private LocalDate dob;
 	private RelationShip relationShip;
 	private FBFMember fbfMember;
+	private String nationalId;
 
 	public String getFbfMemberIdentifier() {
 		return fbfMemberIdentifier;
@@ -84,6 +85,14 @@ public class Dependant {
 
 	public void setFbfMember(FBFMember fbfMember) {
 		this.fbfMember = fbfMember;
+	}
+
+	public String getNationalId() {
+		return nationalId;
+	}
+
+	public void setNationalId(String nationalId) {
+		this.nationalId = nationalId;
 	}
 
 }

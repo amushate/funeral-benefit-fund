@@ -28,7 +28,7 @@ public class DependantController {
 	private DependantService dependantService;
 		
 	@GetMapping(path="/{dependantid}")
-	public List<Dependant>findDependantId(@PathVariable Long dependantid){
+	public Dependant findDependantId(@PathVariable Long dependantid){
 		return dependantService.findDependantById(dependantid);		
 	}
 	
@@ -37,18 +37,18 @@ public class DependantController {
 		return dependantService.findDependantsByIdMember(fbfMemberId);		
 	}
 	
-	@PostMapping(path="/")
+	@PostMapping
 	public Dependant addDependant(@PathVariable  Long fbfMemberId, @RequestBody final Dependant newdependant){
 		return dependantService.addDependant(fbfMemberId,newdependant);		
 	}
 	
 	@DeleteMapping(path="/{dependantid}")
-	public Dependant removeDependant(@PathVariable  Long fbfMemberId, @PathVariable  Long dependantid){
-		return dependantService.removeDependant(fbfMemberId,dependantid);		
+	public Dependant removeDependant(@PathVariable  Long dependantid){
+		return dependantService.removeDependant(dependantid);		
 	}
 	
 	@PutMapping(path="/{dependantid}")
-	public Dependant updateDependant(@PathVariable  Long fbfMemberId, @RequestBody final Dependant rawdependant){
-		return dependantService.updateDependant(fbfMemberId,rawdependant);		
+	public Dependant updateDependant( @RequestBody final Dependant rawdependant){
+		return dependantService.updateDependant(rawdependant);		
 	}
 }

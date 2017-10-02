@@ -70,6 +70,7 @@ public class EntityManagerConfiguration {
     public JpaTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+        
         return transactionManager;
     }
 }
