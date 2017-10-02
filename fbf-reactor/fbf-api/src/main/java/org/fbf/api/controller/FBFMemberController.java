@@ -36,30 +36,18 @@ public class FBFMemberController {
 	}
 
 	@DeleteMapping
-	public boolean deleteMember(@RequestBody final int fbfMemberId){
+	public boolean deleteMember(@RequestBody final Long fbfMemberId){
 		return service.deleteMember(fbfMemberId);
 	}
 	
 	@GetMapping(path="/{fbfMemberId}")
-	public FBFMember findMember(@RequestBody final int fbfMemberId){
+	public FBFMember findMember(@RequestBody final Long fbfMemberId){
 		return service.findMember(fbfMemberId);
 	}
 	
 	@GetMapping(path = "/active-members")
 	public List<FBFMember> getActiveMembers() {
 		return service.getActiveMembers();
-		/*
-		 * List<FBFMember> list=new ArrayList<FBFMember>();
-		 * 
-		 * FBFMember fbfMember = new FBFMember();
-		 * fbfMember.setFirstName("Anesu"); fbfMember.setSurname("Mushate");
-		 * fbfMember.setMemberStatus(MemberStatus.ACTIVE); list.add(fbfMember);
-		 * 
-		 * FBFMember fbfMember2 = new FBFMember();
-		 * fbfMember2.setFirstName("Anesu"); fbfMember2.setSurname("Mushate");
-		 * fbfMember2.setMemberStatus(MemberStatus.ACTIVE);
-		 * list.add(fbfMember2); return list;
-		 */
 	}
 
 }

@@ -7,8 +7,10 @@ import java.util.List;
 
 import org.fbf.model.FBFMember;
 import org.fbf.dao.repositories.FBFMemberRepository;
+import org.fbf.enums.MemberStatus;
 import org.fbf.service.exception.FBFMemberDuplicateException;
 import org.fbf.service.exception.FBFMemberIllegalArgumentException;
+import org.fbf.service.exception.FBFMemberResourceNotFoundException;
 
 /**
  * @author amushate 29 Sep,2017
@@ -32,49 +34,43 @@ public class FBFMemberServiceImpl implements FBFMemberService {
 		return fbfMemberRepository.save(fbfMember);
 	}	
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.fbf.service.FBFMemberService#getActiveMembers()
-	 */
 	public List<FBFMember> getActiveMembers() {
-		// TODO Auto-generated method stub
-		return null;
+		List<FBFMember>fbfMembers=fbfMemberRepository.findByMemberStatus(MemberStatus.ACTIVE);
+		if(fbfMembers==null || fbfMembers.isEmpty()){
+			throw new FBFMemberResourceNotFoundException("No Active members found");
+		}
+		return fbfMembers;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.fbf.service.FBFMemberService#updateMember(org.fbf.model.FBFMember)
-	 */
-	public FBFMember updateMember(FBFMember fbfMember) {
-		// TODO Auto-generated method stub
-		return null;
+	public FBFMember updateMember(FBFMember rawFbfMember) {
+		FBFMember member = findMember(rawFbfMember.getFbfMemberId());
+		member.setDob(rawFbfMember.getDob());
+		member.setEmployeeId(rawFbfMember.getEmployeeId());
+		member.setFirstName(rawFbfMember.getFirstName());
+		member.setSurname(rawFbfMember.getSurname());
+		member.setGender(rawFbfMember.getGender());
+		return fbfMemberRepository.save(member);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.fbf.service.FBFMemberService#deleteMember(int)
-	 */
-	public boolean deleteMember(int fbfMemberId) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deleteMember(Long fbfMemberId) {	
+		fbfMemberRepository.delete(findMember(fbfMemberId));
+		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.fbf.service.FBFMemberService#findMember(int)
-	 */
-	public FBFMember findMember(int fbfMemberId) {
-		// TODO Auto-generated method stub
-		return null;
+	public FBFMember findMember(Long fbfMemberId) {
+		FBFMember fbfMember = fbfMemberRepository.findOne(fbfMemberId);
+		if(fbfMember==null){
+			throw new FBFMemberResourceNotFoundException("Member with member Id: "+fbfMemberId+" not found.");
+		}
+		return fbfMember;
 	}
 	
 	private boolean verifyMemberExists(String nationalId) {
-		// TODO Auto-generated method stub
-		return false;
+		FBFMember fbfMember = fbfMemberRepository.findByNationalId(nationalId);
+		if(fbfMember==null){
+			return false;
+		}
+		return true;
 	}
 
 }

@@ -16,8 +16,8 @@ public interface FBFMemberService {
 
 	FBFMember updateMember(FBFMember fbfMember);
 
-	boolean deleteMember(int fbfMemberId);
+	boolean deleteMember(Long fbfMemberId);
 
-	FBFMember findMember(int fbfMemberId);
+	FBFMember findMember(Long fbfMemberId);
 
 }
