@@ -11,8 +11,12 @@
   <name>fbf-model</name>
   <url>http://maven.apache.org</url>
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.version>4.3.11.RELEASE</spring.version>
+		<jackson.version>2.7.5</jackson.version>
+		<logback.version>1.1.7</logback.version>
+		<failOnMissingWebXml>false</failOnMissingWebXml>
+	</properties>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -24,6 +28,11 @@
     	<groupId>org.hibernate.javax.persistence</groupId>
     	<artifactId>hibernate-jpa-2.1-api</artifactId>
     	<version>1.0.0.Final</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.fasterxml.jackson.core</groupId>
+    	<artifactId>jackson-annotations</artifactId>
+    	<version>${jackson.version}</version>
     </dependency>
   </dependencies>
   

@@ -1,7 +1,10 @@
 package org.fbf.api.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.dozer.DozerBeanMapper;
+import org.fbf.api.ui.model.UIFBFMember;
 import org.fbf.model.FBFMember;
 import org.fbf.service.FBFMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,29 +28,39 @@ public class FBFMemberController {
 	@Autowired
 	private FBFMemberService service;
 
+	@Autowired
+	private DozerBeanMapper mapper;
+
 	@PostMapping
-	public FBFMember createMember(@RequestBody final FBFMember fbfMember) {
-		return service.createMember(fbfMember);
+	public UIFBFMember createMember(@RequestBody final FBFMember fbfMember) {
+		FBFMember createMember = service.createMember(fbfMember);
+		return mapper.map(createMember, UIFBFMember.class);
 	}
-	
+
 	@PutMapping
-	public FBFMember updateMember(@RequestBody final FBFMember fbfMember){
-		return service.updateMember(fbfMember);
+	public UIFBFMember updateMember(@RequestBody final FBFMember fbfMember) {
+		FBFMember updateMember = service.updateMember(fbfMember);
+		return mapper.map(updateMember, UIFBFMember.class);
+
 	}
 
 	@DeleteMapping
-	public boolean deleteMember(@PathVariable final Long fbfMemberId){
+	public boolean deleteMember(@PathVariable final Long fbfMemberId) {
 		return service.deleteMember(fbfMemberId);
 	}
-	
-	@GetMapping(path="/{fbfMemberId}")
-	public FBFMember findMember(@PathVariable final Long fbfMemberId){
-		return service.findMember(fbfMemberId);
+
+	@GetMapping(path = "/{fbfMemberId}")
+	public UIFBFMember findMember(@PathVariable final Long fbfMemberId) {
+		FBFMember findMember = service.findMember(fbfMemberId);
+		return mapper.map(findMember, UIFBFMember.class);
 	}
-	
+
 	@GetMapping(path = "/active-members")
-	public List<FBFMember> getActiveMembers() {
-		return service.getActiveMembers();
+	public List<UIFBFMember> getActiveMembers() {
+		List<UIFBFMember>uifbfMembers=new ArrayList<>();
+		service.getActiveMembers().stream().forEach(member-> uifbfMembers.add(mapper.map(member, UIFBFMember.class))
+		);
+		return uifbfMembers;
 	}
 
 }

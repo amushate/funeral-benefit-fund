@@ -13,11 +13,13 @@ import org.fbf.service.exception.FBFMemberIllegalArgumentException;
 import org.fbf.service.exception.FBFMemberResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author amushate 29 Sep,2017
  */
 @Service
+@Transactional
 public class FBFMemberServiceImpl implements FBFMemberService {
 
 	@Autowired
@@ -25,7 +27,7 @@ public class FBFMemberServiceImpl implements FBFMemberService {
 		
 	public FBFMember createMember(FBFMember fbfMember) {
 		if(fbfMember==null){
-			throw new FBFMemberIllegalArgumentException(String.format("Member cannot be null"));
+			throw new FBFMemberIllegalArgumentException("Member cannot be null");
 		}
 		if(verifyMemberExists(fbfMember.getNationalId())){
 			throw new FBFMemberDuplicateException(String.format("Member with national id '%s' already exists",fbfMember.getNationalId()));

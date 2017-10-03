@@ -10,10 +10,12 @@ import java.util.UUID;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,6 +24,9 @@ import javax.persistence.OneToMany;
 
 import org.fbf.enums.Gender;
 import org.fbf.enums.MemberStatus;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author amushate 25 Sep,2017
@@ -123,8 +128,8 @@ public class FBFMember implements Serializable {
 		this.auditInfo = auditInfo;
 	}
 
-	@OneToMany(orphanRemoval=true)
-	@JoinColumn(name="fbfMemberId")
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="fbfMember")
+	@JsonIgnore
 	public List<Dependant> getDependants() {
 		return dependants;
 	}

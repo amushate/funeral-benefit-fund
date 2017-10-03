@@ -12,11 +12,13 @@ import org.fbf.service.exception.FBFMemberDuplicateException;
 import org.fbf.service.exception.FBFMemberResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author amushate 29 Sep,2017
  */
 @Service
+@Transactional
 public class DependantServiceImpl implements DependantService {
 
 	@Autowired

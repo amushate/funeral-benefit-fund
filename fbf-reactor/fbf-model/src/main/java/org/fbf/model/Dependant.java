@@ -1,9 +1,11 @@
 package org.fbf.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,8 +17,9 @@ import javax.persistence.ManyToOne;
  * @author amushate 29 Sep,2017
  */
 @Entity
-public class Dependant {
+public class Dependant implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private String fbfMemberIdentifier = UUID.randomUUID().toString();
 	private Long dependantId;
 	private String name;
@@ -77,8 +80,8 @@ public class Dependant {
 		this.relationShip = relationShip;
 	}
 
-	@ManyToOne(optional=false)
-    @JoinColumn(name="fbfMemberId", nullable=false, updatable=false)
+	@ManyToOne(optional=false,fetch=FetchType.LAZY)
+	@JoinColumn(name="fbfMemberId", nullable=false, updatable=false)
 	public FBFMember getFbfMember() {
 		return fbfMember;
 	}
