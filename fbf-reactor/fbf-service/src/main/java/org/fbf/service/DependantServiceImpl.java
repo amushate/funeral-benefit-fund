@@ -63,7 +63,7 @@ public class DependantServiceImpl implements DependantService {
 		dependant.setDob(rawdependant.getDob());
 		dependant.setName(rawdependant.getName());
 		dependant.setSurname(rawdependant.getSurname());
-		dependant.setRelationShip(rawdependant.getRelationShip());
+		dependant.setRelationShipType(rawdependant.getRelationShipType());
 		return dependantRepository.save(dependant);
 	}
 
@@ -74,6 +74,15 @@ public class DependantServiceImpl implements DependantService {
 			throw new FBFMemberResourceNotFoundException("Cannot find dependent with dependant ID:"+dependantid);
 		}
 		return dependant;
+	}
+
+	@Override
+	public List<Dependant> listDependants() {
+		List<Dependant>dependants=dependantRepository.findAll();
+		if(dependants==null){
+			throw new FBFMemberResourceNotFoundException("No dependants found");
+		}
+		return dependants;
 	}
 
 }

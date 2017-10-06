@@ -20,4 +20,6 @@ public interface FBFMemberService {
 
 	FBFMember findMember(Long fbfMemberId);
 
+	List<FBFMember> listMembers();
+
 }

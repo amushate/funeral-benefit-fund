@@ -3,8 +3,11 @@
  */
 package org.fbf.api.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.dozer.DozerBeanMapper;
+import org.fbf.api.ui.model.UIDependant;
 import org.fbf.model.Dependant;
 import org.fbf.service.DependantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,34 +24,52 @@ import org.springframework.web.bind.annotation.RestController;
  * @author amushate 29 Sep,2017
  */
 @RestController
-@RequestMapping(value = "/members/{fbfMemberId}/dependants")
+@RequestMapping(value = "/dependants")
 public class DependantController {
 
 	@Autowired
 	private DependantService dependantService;
+	
+	@Autowired
+	private DozerBeanMapper mapper;
 		
 	@GetMapping(path="/{dependantid}")
-	public Dependant findDependantId(@PathVariable Long dependantid){
-		return dependantService.findDependantById(dependantid);		
+	public UIDependant findDependantId(@PathVariable Long dependantid){
+		return mapper.map(dependantService.findDependantById(dependantid),UIDependant.class);		
 	}
 	
 	@GetMapping
-	public List<Dependant>findDependantsByMemberId(@PathVariable Long fbfMemberId){
-		return dependantService.findDependantsByIdMember(fbfMemberId);		
+	public List<UIDependant>listDependants(){
+		List<Dependant> listDependants = dependantService.listDependants();	
+		List<UIDependant>uiDependants=new ArrayList<>();
+		listDependants.stream().forEach(dependant->{
+			uiDependants.add(mapper.map(dependant, UIDependant.class));
+		});
+		return uiDependants;
+	}
+	
+	@GetMapping(path="/members/{fbfMemberId}")
+	public List<UIDependant>findDependantsByMemberId(@PathVariable Long fbfMemberId){
+		List<Dependant> listDependants = dependantService.findDependantsByIdMember(fbfMemberId);	
+		List<UIDependant>uiDependants=new ArrayList<>();
+		listDependants.stream().forEach(dependant->{
+			uiDependants.add(mapper.map(dependant, UIDependant.class));
+		});
+		return uiDependants;
 	}
 	
 	@PostMapping
-	public Dependant addDependant(@PathVariable  Long fbfMemberId, @RequestBody final Dependant newdependant){
-		return dependantService.addDependant(fbfMemberId,newdependant);		
+	public UIDependant addDependant(@PathVariable  Long fbfMemberId, @RequestBody final Dependant newdependant){
+		return mapper.map(dependantService.addDependant(fbfMemberId,newdependant),UIDependant.class);
 	}
 	
 	@DeleteMapping(path="/{dependantid}")
-	public Dependant removeDependant(@PathVariable  Long dependantid){
-		return dependantService.removeDependant(dependantid);		
+	public UIDependant removeDependant(@PathVariable  Long dependantid){
+		return mapper.map(dependantService.removeDependant(dependantid),UIDependant.class);
 	}
 	
 	@PutMapping(path="/{dependantid}")
-	public Dependant updateDependant( @RequestBody final Dependant rawdependant){
-		return dependantService.updateDependant(rawdependant);		
+	public UIDependant updateDependant( @RequestBody final Dependant rawdependant){
+		return mapper.map(dependantService.updateDependant(rawdependant),UIDependant.class);		
 	}
 }

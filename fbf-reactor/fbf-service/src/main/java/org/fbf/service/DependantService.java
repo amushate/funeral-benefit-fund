@@ -22,4 +22,6 @@ public interface DependantService {
 
 	Dependant findDependantById(Long dependantid);
 
+	List<Dependant> listDependants();
+
 }

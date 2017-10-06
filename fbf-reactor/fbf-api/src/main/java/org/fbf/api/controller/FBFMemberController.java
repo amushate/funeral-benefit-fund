@@ -55,6 +55,14 @@ public class FBFMemberController {
 		return mapper.map(findMember, UIFBFMember.class);
 	}
 
+	@GetMapping
+	public List<UIFBFMember> listMembers() {
+		List<UIFBFMember>uifbfMembers=new ArrayList<>();
+		service.listMembers().stream().forEach(member-> uifbfMembers.add(mapper.map(member, UIFBFMember.class))
+		);
+		return uifbfMembers;
+	}
+	
 	@GetMapping(path = "/active-members")
 	public List<UIFBFMember> getActiveMembers() {
 		List<UIFBFMember>uifbfMembers=new ArrayList<>();

@@ -75,4 +75,13 @@ public class FBFMemberServiceImpl implements FBFMemberService {
 		return true;
 	}
 
+	@Override
+	public List<FBFMember> listMembers() {
+		 List<FBFMember> fbfMembers = fbfMemberRepository.findAll();
+		if(fbfMembers==null || fbfMembers.isEmpty()){
+			throw new FBFMemberResourceNotFoundException("No Members found");
+		}
+		return fbfMembers;
+	}
+
 }

@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.fbf.enums.Gender;
+import org.fbf.enums.RelationShipType;
+
 /**
  * 
  * @author amushate 29 Sep,2017
@@ -25,9 +28,10 @@ public class Dependant implements Serializable{
 	private String name;
 	private String surname;
 	private LocalDate dob;
-	private RelationShip relationShip;
+	private RelationShipType relationShipType;
 	private FBFMember fbfMember;
 	private String nationalId;
+	private Gender gender;
 
 	public String getFbfMemberIdentifier() {
 		return fbfMemberIdentifier;
@@ -71,15 +75,6 @@ public class Dependant implements Serializable{
 		this.dob = dob;
 	}
 
-	@ManyToOne
-	public RelationShip getRelationShip() {
-		return relationShip;
-	}
-
-	public void setRelationShip(RelationShip relationShip) {
-		this.relationShip = relationShip;
-	}
-
 	@ManyToOne(optional=false,fetch=FetchType.LAZY)
 	@JoinColumn(name="fbfMemberId", nullable=false, updatable=false)
 	public FBFMember getFbfMember() {
@@ -96,6 +91,22 @@ public class Dependant implements Serializable{
 
 	public void setNationalId(String nationalId) {
 		this.nationalId = nationalId;
+	}
+
+	public RelationShipType getRelationShipType() {
+		return relationShipType;
+	}
+
+	public void setRelationShipType(RelationShipType relationShipType) {
+		this.relationShipType = relationShipType;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
 	}
 
 }

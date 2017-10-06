@@ -19,6 +19,7 @@ public class UIFBFMember {
 	private String nationalId;
 	private String employeeId;
 	private LocalDate dob;
+	private Long fbfMemberId;
 	private MemberStatus memberStatus;
 
 	public String getFirstName() {
@@ -75,6 +76,14 @@ public class UIFBFMember {
 
 	public void setMemberStatus(MemberStatus memberStatus) {
 		this.memberStatus = memberStatus;
+	}
+
+	public Long getFbfMemberId() {
+		return fbfMemberId;
+	}
+
+	public void setFbfMemberId(Long fbfMemberId) {
+		this.fbfMemberId = fbfMemberId;
 	}
 
 }
