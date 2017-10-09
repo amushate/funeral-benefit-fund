@@ -2,13 +2,14 @@ package org.fbf.api;
 
 import javax.servlet.Filter;
 
+import org.fbf.api.security.config.WebSecurityConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class ServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[] { WebConfig.class };
+        return new Class[] { WebConfig.class, WebSecurityConfig.class };
     }
 
     @Override
