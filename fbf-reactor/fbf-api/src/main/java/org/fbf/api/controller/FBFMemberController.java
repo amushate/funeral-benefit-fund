@@ -37,8 +37,8 @@ public class FBFMemberController {
 		return mapper.map(createMember, UIFBFMember.class);
 	}
 
-	@PutMapping
-	public UIFBFMember updateMember(@RequestBody final FBFMember fbfMember) {
+	@PutMapping(path="/{fbfMemberId}")
+	public UIFBFMember updateMember(@RequestBody final FBFMember fbfMember,@PathVariable Long fbfMemberId) {
 		FBFMember updateMember = service.updateMember(fbfMember);
 		return mapper.map(updateMember, UIFBFMember.class);
 
