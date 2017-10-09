@@ -8,6 +8,7 @@ import java.util.List;
 import org.fbf.model.Permission;
 import org.fbf.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,7 @@ public class PermissionController {
 	private PermissionService permissionService;
 	
 	@PostMapping
+	@PreAuthorize(value="hasRole('ROLE_LIST STEWARDS')")
 	public Permission createPermission(@RequestBody Permission permision){
 		return permissionService.createPermission(permision);		
 	}
