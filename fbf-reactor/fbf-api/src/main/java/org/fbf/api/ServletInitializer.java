@@ -1,5 +1,7 @@
 package org.fbf.api;
 
+import javax.servlet.Filter;
+
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
@@ -22,5 +24,11 @@ public class ServletInitializer extends AbstractAnnotationConfigDispatcherServle
 	protected String[] getServletMappings() {
 		return new String[] { "/" };
 	}
+	
+	@Override
+    protected Filter[] getServletFilters() {
+	        Filter [] filters = {new CORSFilter()};
+	        return filters;
+    }
 
 }
