@@ -7,6 +7,7 @@ import org.fbf.dao.repositories.UserRepository;
 import org.fbf.model.Permission;
 import org.fbf.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,19 +17,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
 
-	private final LoggedInChecker loggedInChecker;
+	@Autowired
+	private LoggedInChecker loggedInChecker;
 
+	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
 	private PermissionService permissionService;
 
 	@Autowired
-	UserServiceImpl(LoggedInChecker loggedInChecker, UserRepository userRepository,
-			PermissionService permissionService) {
-		this.loggedInChecker = loggedInChecker;
-		this.userRepository = userRepository;
-		this.permissionService = permissionService;
-	}
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public User getUserByUsername(String username) {
@@ -52,6 +51,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User createUser(User user) {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		return userRepository.save(user);
 	}
 
@@ -61,5 +61,10 @@ public class UserServiceImpl implements UserService {
 		Permission permission = permissionService.findPermission(role);
 		user.getPermissions().add(permission);
 		return userRepository.save(user);
+	}
+
+	@Override
+	public User login(User user) {
+		return getUserByUsername(user.getUsername());
 	}
 }

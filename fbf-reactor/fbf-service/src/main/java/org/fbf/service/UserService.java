@@ -20,4 +20,6 @@ public interface UserService {
 	User createUser(User user);
 
 	User addPermission(String username, String role);
+
+	User login(User user);
 }

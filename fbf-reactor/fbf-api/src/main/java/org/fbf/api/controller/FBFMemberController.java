@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author amushate 28 Sep,2017
  */
 @RestController
-@RequestMapping(value = "/members")
+@RequestMapping(value = "/api/members")
 public class FBFMemberController {
 
 	@Autowired
@@ -51,6 +51,7 @@ public class FBFMemberController {
 	}
 
 	@GetMapping(path = "/{fbfMemberId}")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public UIFBFMember findMember(@PathVariable final Long fbfMemberId) {
 		FBFMember findMember = service.findMember(fbfMemberId);
 		return mapper.map(findMember, UIFBFMember.class);

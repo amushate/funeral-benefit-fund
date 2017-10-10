@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -36,7 +37,7 @@ public class User {
 		this.password = password;
 	}
 
-	@OneToMany
+	@OneToMany(fetch=FetchType.EAGER)
 	public List<Permission> getPermissions() {
 		return permissions;
 	}

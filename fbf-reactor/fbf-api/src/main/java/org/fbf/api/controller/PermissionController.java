@@ -20,14 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
  * @author amushate 09 Oct,2017
  */
 @RestController
-@RequestMapping("/permissions")
+@RequestMapping("/api/permissions")
 public class PermissionController {
 
 	@Autowired
 	private PermissionService permissionService;
 	
 	@PostMapping
-	@PreAuthorize(value="hasRole('ROLE_LIST STEWARDS')")
 	public Permission createPermission(@RequestBody Permission permision){
 		return permissionService.createPermission(permision);		
 	}

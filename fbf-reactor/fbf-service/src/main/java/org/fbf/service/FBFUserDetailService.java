@@ -18,13 +18,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class FBFUserDetailService implements UserDetailsService {
-	private final UserService userService;
-
+	
 	@Autowired
-	FBFUserDetailService(UserService userService) {
-		this.userService = userService;
-	}
-
+	private UserService userService;
+	
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userService.getUserByUsername(username);
 		if (user == null) {

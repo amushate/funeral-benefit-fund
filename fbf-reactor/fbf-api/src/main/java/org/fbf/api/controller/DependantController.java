@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author amushate 29 Sep,2017
  */
 @RestController
-@RequestMapping(value = "/dependants")
+@RequestMapping(value = "/api/dependants")
 public class DependantController {
 
 	@Autowired
