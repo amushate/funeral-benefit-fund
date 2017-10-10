@@ -31,6 +31,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	
 	@Autowired
 	private ClientDetailsService clientDetailsService;
 
