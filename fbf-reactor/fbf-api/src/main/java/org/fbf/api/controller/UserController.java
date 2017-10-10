@@ -19,14 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
  * @author amushate 09 Oct,2017
  */
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/user")
 public class UserController {
-	private final UserService userService;
-
+	
 	@Autowired
-	UserController(UserService userService) {
-		this.userService = userService;
-	}
+	private UserService userService;
 
 	@GetMapping(path="/loggedin")
 	ResponseEntity<Boolean> isCurrentUserLoggedIn() {
@@ -36,6 +33,11 @@ public class UserController {
 	@GetMapping(path="/current")
 	ResponseEntity<User> getCurrentUser() {
 		return ok(userService.getCurrentUser());
+	}
+	
+	@PostMapping(path="/login")
+	ResponseEntity<User> login(@RequestBody User user) {
+		return new ResponseEntity<>(userService.login(user), HttpStatus.OK);
 	}
 	
 	@PostMapping

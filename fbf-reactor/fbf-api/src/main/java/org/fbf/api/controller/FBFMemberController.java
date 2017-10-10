@@ -51,6 +51,7 @@ public class FBFMemberController {
 	}
 
 	@GetMapping(path = "/{fbfMemberId}")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public UIFBFMember findMember(@PathVariable final Long fbfMemberId) {
 		FBFMember findMember = service.findMember(fbfMemberId);
 		return mapper.map(findMember, UIFBFMember.class);

@@ -1,18 +1,27 @@
 package org.fbf.api.security.config;
 
+import org.fbf.service.FBFUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.approval.ApprovalStore;
+import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
+import org.springframework.security.oauth2.provider.approval.TokenStoreUserApprovalHandler;
+import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 /**
  * 
@@ -21,59 +30,101 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	private static final String LOGIN_PATH = ResourcePaths.User.ROOT + ResourcePaths.User.LOGIN;
+
+	//@Autowired
+//	private DataSource dataSource;
+	
+	@Autowired
+	private ClientDetailsService clientDetailsService;
 
 	@Autowired
-	private UserDetailsService userDetailsService;
-	@Autowired
-	private HttpAuthenticationEntryPoint authenticationEntryPoint;
-	@Autowired
-	private AuthSuccessHandler authSuccessHandler;
-	@Autowired
-	private AuthFailureHandler authFailureHandler;
-	@Autowired
-	private HttpLogoutSuccessHandler logoutSuccessHandler;
+	private FBFUserDetailService fbfUserDetailService;	
+	
+    @Override
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    protected void configure(HttpSecurity http) throws Exception {
+		http
+		.sessionManagement()
+		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.and()
+		.csrf().disable()
+	  	.authorizeRequests()
+	  	.antMatchers("/").permitAll() 
+	  	.antMatchers("/user/login").permitAll() 
+	  	.antMatchers("/about").permitAll() 
+	  	.antMatchers("/signup").permitAll()
+	  	.antMatchers("/oauth/token").permitAll()
+	  	//.antMatchers("/api/**").authenticated()
+	  	.anyRequest().authenticated()
+	  	.and()
+	  	.httpBasic()
+	  		.realmName("CRM_REALM");
+    }
 
-	@Bean
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
-
-	@Bean
-	@Override
-	public UserDetailsService userDetailsServiceBean() throws Exception {
-		return super.userDetailsServiceBean();
-	}
-
-	@Bean
-	public AuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-		authenticationProvider.setUserDetailsService(userDetailsService);
-		authenticationProvider.setPasswordEncoder(new ShaPasswordEncoder());
-
-		return authenticationProvider;
-	}
-
-	@Override
+    
+    @Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(authenticationProvider());
+    	auth.userDetailsService(fbfUserDetailService)
+    		.passwordEncoder(passwordEncoder());
 	}
+    
+	
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
-	@Override
-	protected AuthenticationManager authenticationManager() throws Exception {
-		return super.authenticationManager();
+	//-- use the JdbcTokenStore to store tokens
+    /*
+	@Bean
+	public JdbcTokenStore tokenStore() {
+		return new JdbcTokenStore(dataSource);
 	}
-
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authenticationProvider(authenticationProvider()).exceptionHandling()
-				.authenticationEntryPoint(authenticationEntryPoint).and().formLogin().permitAll()
-				.loginProcessingUrl(LOGIN_PATH).usernameParameter(Parameters.USERNAME).passwordParameter(Parameters.PASSWORD)
-				.successHandler(authSuccessHandler).failureHandler(authFailureHandler).and().logout().permitAll()
-				.logoutRequestMatcher(new AntPathRequestMatcher(LOGIN_PATH, "DELETE"))
-				.logoutSuccessHandler(logoutSuccessHandler).and().sessionManagement().maximumSessions(1);
-
-		http.authorizeRequests().anyRequest().authenticated();
+    */
+    
+	//-- use the JwtTokenStore instead of JdbcTokenStore
+	@Bean
+	public TokenStore tokenStore() {
+		//return new JdbcTokenStore(dataSource);
+		return new JwtTokenStore(jwtTokenEnhancer());
 	}
+	
+	@Bean
+	protected JwtAccessTokenConverter jwtTokenEnhancer() {
+		/*
+	    KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "mySecretKey".toCharArray());
+	    JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+	    converter.setKeyPair(keyStoreKeyFactory.getKeyPair("jwt"));
+	    */
+		//-- for the simple demo purpose, used the secret for signing.
+		//-- for production, it is recommended to use public/private key pair
+	    JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+	    converter.setSigningKey("Demo-Key-1");
+	    
+	    return converter;
+	}	
+
+	@Bean
+	@Autowired
+	public TokenStoreUserApprovalHandler userApprovalHandler(TokenStore tokenStore){
+		TokenStoreUserApprovalHandler handler = new TokenStoreUserApprovalHandler();
+		handler.setTokenStore(tokenStore);
+		handler.setRequestFactory(new DefaultOAuth2RequestFactory(clientDetailsService));
+		handler.setClientDetailsService(clientDetailsService);
+		return handler;
+	}
+	
+	@Bean
+	@Autowired
+	public ApprovalStore approvalStore(TokenStore tokenStore) throws Exception {
+		TokenApprovalStore store = new TokenApprovalStore();
+		store.setTokenStore(tokenStore);
+		return store;
+	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+	    return new BCryptPasswordEncoder();
+	}	
 }

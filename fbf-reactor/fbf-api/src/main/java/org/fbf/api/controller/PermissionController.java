@@ -27,7 +27,6 @@ public class PermissionController {
 	private PermissionService permissionService;
 	
 	@PostMapping
-	@PreAuthorize(value="hasRole('ROLE_LIST STEWARDS')")
 	public Permission createPermission(@RequestBody Permission permision){
 		return permissionService.createPermission(permision);		
 	}
