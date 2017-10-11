@@ -51,6 +51,7 @@ public class FBFMemberServiceImpl implements FBFMemberService {
 		member.setFirstName(rawFbfMember.getFirstName());
 		member.setSurname(rawFbfMember.getSurname());
 		member.setGender(rawFbfMember.getGender());
+		member.setNationalId(rawFbfMember.getNationalId());
 		return fbfMemberRepository.save(member);
 	}
 

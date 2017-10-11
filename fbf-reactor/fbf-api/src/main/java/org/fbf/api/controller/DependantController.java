@@ -48,7 +48,7 @@ public class DependantController {
 		return uiDependants;
 	}
 	
-	@GetMapping(path="/members/{fbfMemberId}")
+	@GetMapping(path="/member/{fbfMemberId}")
 	public List<UIDependant>findDependantsByMemberId(@PathVariable Long fbfMemberId){
 		List<Dependant> listDependants = dependantService.findDependantsByIdMember(fbfMemberId);	
 		List<UIDependant>uiDependants=new ArrayList<>();

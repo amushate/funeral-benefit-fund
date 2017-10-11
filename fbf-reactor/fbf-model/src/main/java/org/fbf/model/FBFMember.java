@@ -4,7 +4,7 @@
 package org.fbf.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,17 +15,14 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import org.fbf.enums.Gender;
 import org.fbf.enums.MemberStatus;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -44,12 +41,12 @@ public class FBFMember implements Serializable {
 	private Gender gender;
 	private String nationalId;
 	private String employeeId;
-	private LocalDate dob;
+	private Date dob;
 	private MemberStatus memberStatus;
 	private AuditInfo auditInfo;
 
-	private List<Dependant>dependants;
-	
+	private List<Dependant> dependants;
+
 	public String getFbfMemberIdentifier() {
 		return fbfMemberIdentifier;
 	}
@@ -59,7 +56,7 @@ public class FBFMember implements Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getFbfMemberId() {
 		return fbfMemberId;
 	}
@@ -75,8 +72,6 @@ public class FBFMember implements Serializable {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-
-	
 
 	public Gender getGender() {
 		return gender;
@@ -102,11 +97,11 @@ public class FBFMember implements Serializable {
 		this.employeeId = employeeId;
 	}
 
-	public LocalDate getDob() {
+	public Date getDob() {
 		return dob;
 	}
 
-	public void setDob(LocalDate dob) {
+	public void setDob(Date dob) {
 		this.dob = dob;
 	}
 
@@ -128,7 +123,7 @@ public class FBFMember implements Serializable {
 		this.auditInfo = auditInfo;
 	}
 
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="fbfMember")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "fbfMember")
 	@JsonIgnore
 	public List<Dependant> getDependants() {
 		return dependants;
