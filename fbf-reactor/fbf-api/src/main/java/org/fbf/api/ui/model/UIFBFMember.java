@@ -3,7 +3,7 @@
  */
 package org.fbf.api.ui.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import org.fbf.enums.Gender;
 import org.fbf.enums.MemberStatus;
@@ -18,7 +18,8 @@ public class UIFBFMember {
 	private Gender gender;
 	private String nationalId;
 	private String employeeId;
-	private LocalDate dob;
+
+	private Date dob;
 	private Long fbfMemberId;
 	private MemberStatus memberStatus;
 
@@ -62,11 +63,11 @@ public class UIFBFMember {
 		this.employeeId = employeeId;
 	}
 
-	public LocalDate getDob() {
+	public Date getDob() {
 		return dob;
 	}
 
-	public void setDob(LocalDate dob) {
+	public void setDob(Date dob) {
 		this.dob = dob;
 	}
 
