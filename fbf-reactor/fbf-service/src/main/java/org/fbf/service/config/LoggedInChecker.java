@@ -1,6 +1,7 @@
-package org.fbf.service;
+package org.fbf.service.config;
 
 import org.fbf.model.User;
+import org.fbf.service.FBFUserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;

@@ -58,7 +58,7 @@ public class DependantController {
 		return uiDependants;
 	}
 	
-	@PostMapping
+	@PostMapping(path="/member/{fbfMemberId}")
 	public UIDependant addDependant(@PathVariable  Long fbfMemberId, @RequestBody final Dependant newdependant){
 		return mapper.map(dependantService.addDependant(fbfMemberId,newdependant),UIDependant.class);
 	}

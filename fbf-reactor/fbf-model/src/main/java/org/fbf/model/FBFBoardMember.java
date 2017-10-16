@@ -6,6 +6,7 @@ package org.fbf.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * @author amushate 13 Oct,2017
@@ -70,6 +71,7 @@ public class FBFBoardMember implements Serializable{
 		this.imageUrl = imageUrl;
 	}
 
+	@Id
 	public Long getFbfBoardMemberId() {
 		return fbfBoardMemberId;
 	}

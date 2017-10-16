@@ -22,6 +22,7 @@ public class UIFBFMember {
 	private Date dob;
 	private Long fbfMemberId;
 	private MemberStatus memberStatus;
+	private String phoneNumber;
 
 	public String getFirstName() {
 		return firstName;
@@ -85,6 +86,14 @@ public class UIFBFMember {
 
 	public void setFbfMemberId(Long fbfMemberId) {
 		this.fbfMemberId = fbfMemberId;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import org.fbf.dao.repositories.UserRepository;
 import org.fbf.model.Permission;
 import org.fbf.model.User;
+import org.fbf.service.config.LoggedInChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,11 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findOne(username);
 	}
 
+	@Override
+	public User getUserByUsernameAndPassword(String username,String password) {
+		return userRepository.findByUsernameAndPassword(username, password);
+	}
+	
 	@Override
 	public List<String> getPermissions(String username) {
 		return new ArrayList<>();
@@ -64,7 +70,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User login(User user) {
-		return getUserByUsername(user.getUsername());
+	public User login(String username, String rawPassword) {
+		User user = getUserByUsername(username);
+		if(user==null){
+			return null;
+		}
+		boolean encodePassword=passwordEncoder.matches(rawPassword, user.getPassword());
+		if(encodePassword){
+			return user;
+		}
+		return null;		
 	}
 }

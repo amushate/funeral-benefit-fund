@@ -1,7 +1,7 @@
 package org.fbf.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.UUID;
 
 import javax.persistence.Entity;
@@ -27,8 +27,8 @@ public class Dependant implements Serializable{
 	private Long dependantId;
 	private String name;
 	private String surname;
-	private LocalDate dob;
-	private RelationShipType relationShipType;
+	private Date dob;
+	private String relationShipType;
 	private FBFMember fbfMember;
 	private String nationalId;
 	private Gender gender;
@@ -67,11 +67,11 @@ public class Dependant implements Serializable{
 		this.surname = surname;
 	}
 
-	public LocalDate getDob() {
+	public Date getDob() {
 		return dob;
 	}
 
-	public void setDob(LocalDate dob) {
+	public void setDob(Date dob) {
 		this.dob = dob;
 	}
 
@@ -93,11 +93,11 @@ public class Dependant implements Serializable{
 		this.nationalId = nationalId;
 	}
 
-	public RelationShipType getRelationShipType() {
+	public String getRelationShipType() {
 		return relationShipType;
 	}
 
-	public void setRelationShipType(RelationShipType relationShipType) {
+	public void setRelationShipType(String relationShipType) {
 		this.relationShipType = relationShipType;
 	}
 

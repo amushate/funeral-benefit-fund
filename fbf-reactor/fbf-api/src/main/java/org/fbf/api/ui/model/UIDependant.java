@@ -3,7 +3,7 @@
  */
 package org.fbf.api.ui.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import org.fbf.enums.RelationShipType;
 
@@ -16,8 +16,8 @@ public class UIDependant {
 	private Long dependantId;
 	private String name;
 	private String surname;
-	private LocalDate dob;
-	private RelationShipType relationShipType;
+	private Date dob;
+	private String relationShipType;
 	private String nationalId;
 
 	public String getFbfMemberIdentifier() {
@@ -52,19 +52,19 @@ public class UIDependant {
 		this.surname = surname;
 	}
 
-	public LocalDate getDob() {
+	public Date getDob() {
 		return dob;
 	}
 
-	public void setDob(LocalDate dob) {
+	public void setDob(Date dob) {
 		this.dob = dob;
 	}
 
-	public RelationShipType getRelationShipType() {
+	public String getRelationShipType() {
 		return relationShipType;
 	}
 
-	public void setRelationShipType(RelationShipType relationShipType) {
+	public void setRelationShipType(String relationShipType) {
 		this.relationShipType = relationShipType;
 	}
 
