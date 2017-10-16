@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 /**
  * 
@@ -35,9 +36,9 @@ public class UserController {
 		return ok(userService.getCurrentUser());
 	}
 	
-	@PostMapping(path="/login")
-	ResponseEntity<User> login(@RequestBody User user) {
-		return new ResponseEntity<>(userService.login(user), HttpStatus.OK);
+	@GetMapping(path="/login")
+	ResponseEntity<User> login(@RequestParam(name="username",required=true) String username, @RequestParam(name="password",required=true) String password) {
+		return new ResponseEntity<>(userService.login(username,password), HttpStatus.OK);
 	}
 	
 	@PostMapping

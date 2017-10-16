@@ -44,6 +44,7 @@ public class FBFMember implements Serializable {
 	private Date dob;
 	private MemberStatus memberStatus;
 	private AuditInfo auditInfo;
+	private String phoneNumber;
 
 	private List<Dependant> dependants;
 
@@ -139,6 +140,14 @@ public class FBFMember implements Serializable {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 }

@@ -21,5 +21,7 @@ public interface UserService {
 
 	User addPermission(String username, String role);
 
-	User login(User user);
+	User login(String username,String password);
+
+	User getUserByUsernameAndPassword(String username, String password);
 }

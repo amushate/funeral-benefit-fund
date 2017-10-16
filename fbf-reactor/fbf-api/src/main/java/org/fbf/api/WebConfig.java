@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -22,12 +24,18 @@ import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 @ComponentScan("org.fbf")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-	@Bean(name = "multipartResolver")
-	public MultipartResolver getMultipartResolver() {
+	@Bean
+	public MultipartResolver multipartResolver() {
 		final CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
 		multipartResolver.setMaxUploadSize(50971520L);
 		multipartResolver.setMaxInMemorySize(5242880);
 		return multipartResolver;
+	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		final BCryptPasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
+		return passwordEncoder;
 	}
 
 	@Override
