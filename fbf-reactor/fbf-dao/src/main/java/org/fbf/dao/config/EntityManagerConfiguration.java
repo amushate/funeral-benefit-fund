@@ -12,6 +12,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -32,6 +34,11 @@ public class EntityManagerConfiguration {
     private static final String PROPERTY_NAME_HIBERNATE_HBM2DDL= "hibernate.hbm2ddl.auto";
     private static final String PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN = "entitymanager.packages.to.scan";
     
+	private static final String PROPERTY_NAME_EMAIL = "email";
+	private static final String PROPERTY_EMAIL_PASSWORD = "email.password";
+	private static final String PROPERTY_EMAIL_HOST = "email.host";
+	private static final String PROPERTY_EMAIL_PORT = null;
+    
 	@Autowired
 	private Environment env;
 
@@ -45,6 +52,24 @@ public class EntityManagerConfiguration {
         dataSource.setPassword(env.getRequiredProperty(PROPERTY_NAME_DATABASE_PASSWORD));
         return dataSource;
     }
+	
+	@Bean
+	public JavaMailSender getJavaMailSender() {
+		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+	    mailSender.setHost(env.getRequiredProperty(PROPERTY_EMAIL_HOST));
+	    mailSender.setPort(Integer.valueOf(env.getRequiredProperty(PROPERTY_EMAIL_PORT)));
+	     
+	    mailSender.setUsername(env.getRequiredProperty(PROPERTY_NAME_EMAIL));
+	    mailSender.setPassword(env.getRequiredProperty(PROPERTY_EMAIL_PASSWORD));
+	     
+	    Properties props = mailSender.getJavaMailProperties();
+	    props.put("mail.transport.protocol", "smtp");
+	    props.put("mail.smtp.auth", "true");
+	    props.put("mail.smtp.starttls.enable", "true");
+	    props.put("mail.debug", "true");
+	     
+	    return mailSender;
+	}
  
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {

@@ -30,12 +30,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		multipartResolver.setMaxUploadSize(50971520L);
 		multipartResolver.setMaxInMemorySize(5242880);
 		return multipartResolver;
-	}
-	
+	}	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-		final BCryptPasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
-		return passwordEncoder;
+		return new BCryptPasswordEncoder();
 	}
 
 	@Override

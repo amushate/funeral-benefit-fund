@@ -32,7 +32,7 @@ public class FBFBoardMemberController {
 	}
 	
 	@PostMapping
-	public FBFBoardMember createBoardMember(FBFBoardMember boardMember){		
+	public FBFBoardMember createBoardMember(@RequestBody FBFBoardMember boardMember){		
 		return boardMemberService.createMember(boardMember);		
 	}
 	

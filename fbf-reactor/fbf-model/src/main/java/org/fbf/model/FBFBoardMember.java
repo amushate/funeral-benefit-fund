@@ -5,13 +5,18 @@ package org.fbf.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
  * @author amushate 13 Oct,2017
  */
 @Entity
+@Access(AccessType.PROPERTY)
 public class FBFBoardMember implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -72,6 +77,7 @@ public class FBFBoardMember implements Serializable{
 	}
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getFbfBoardMemberId() {
 		return fbfBoardMemberId;
 	}
@@ -79,5 +85,14 @@ public class FBFBoardMember implements Serializable{
 	public void setFbfBoardMemberId(Long fbfBoardMemberId) {
 		this.fbfBoardMemberId = fbfBoardMemberId;
 	}
+
+	@Override
+	public String toString() {
+		return "FBFBoardMember [fbfBoardMemberId=" + fbfBoardMemberId + ", title=" + title + ", fullName=" + fullName
+				+ ", phoneNumber=" + phoneNumber + ", email=" + email + ", qualities=" + qualities + ", imageUrl="
+				+ imageUrl + "]";
+	}
+	
+	
 
 }
