@@ -6,6 +6,9 @@ package org.fbf.model;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import org.fbf.enums.DocumentType;
 
@@ -21,6 +24,8 @@ public class Document {
 	private DocumentType documentType;
 	private Long documentOwnerId;
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Long getDocumentId() {
 		return documentId;
 	}

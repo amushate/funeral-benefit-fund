@@ -37,7 +37,7 @@ public class EntityManagerConfiguration {
 	private static final String PROPERTY_NAME_EMAIL = "email";
 	private static final String PROPERTY_EMAIL_PASSWORD = "email.password";
 	private static final String PROPERTY_EMAIL_HOST = "email.host";
-	private static final String PROPERTY_EMAIL_PORT = null;
+	private static final String PROPERTY_EMAIL_PORT = "email.port";
     
 	@Autowired
 	private Environment env;
@@ -54,7 +54,7 @@ public class EntityManagerConfiguration {
     }
 	
 	@Bean
-	public JavaMailSender getJavaMailSender() {
+	public JavaMailSender mailSender() {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 	    mailSender.setHost(env.getRequiredProperty(PROPERTY_EMAIL_HOST));
 	    mailSender.setPort(Integer.valueOf(env.getRequiredProperty(PROPERTY_EMAIL_PORT)));
