@@ -23,6 +23,7 @@ public class Document {
 	private String documentName;
 	private DocumentType documentType;
 	private Long documentOwnerId;
+	private String documentUrl;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -56,6 +57,14 @@ public class Document {
 
 	public void setDocumentOwnerId(Long documentOwnerId) {
 		this.documentOwnerId = documentOwnerId;
+	}
+
+	public String getDocumentUrl() {
+		return documentUrl;
+	}
+
+	public void setDocumentUrl(String documentUrl) {
+		this.documentUrl = documentUrl;
 	}
 
 }

@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.fbf.enums.Gender;
-import org.fbf.enums.RelationShipType;
 
 /**
  * 
@@ -42,7 +41,7 @@ public class Dependant implements Serializable{
 	}
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getDependantId() {
 		return dependantId;
 	}

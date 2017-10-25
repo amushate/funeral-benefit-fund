@@ -5,8 +5,6 @@ package org.fbf.api.ui.model;
 
 import java.util.Date;
 
-import org.fbf.enums.RelationShipType;
-
 /**
  * @author amushate 06 Oct,2017
  */
