@@ -74,6 +74,7 @@ public class FBFMember implements Serializable {
 		this.firstName = firstName;
 	}
 
+	@Enumerated(EnumType.STRING)
 	public Gender getGender() {
 		return gender;
 	}

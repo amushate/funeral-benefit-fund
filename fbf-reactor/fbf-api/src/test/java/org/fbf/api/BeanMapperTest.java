@@ -3,22 +3,13 @@
  */
 package org.fbf.api;
 
-import static org.junit.Assert.*;
-
-import org.dozer.DozerBeanMapper;
-import org.fbf.api.ui.model.UIFBFMember;
-import org.fbf.enums.Gender;
-import org.fbf.model.FBFMember;
-import org.junit.Before;
-import org.junit.Test;
-
 /**
  * @author amushate 03 Oct,2017
  */
 public class BeanMapperTest {
 
 	
-	DozerBeanMapper mapper;
+	/*DozerBeanMapper mapper;
 	 
 	@Before
 	public void before() throws Exception {
@@ -34,6 +25,6 @@ public class BeanMapperTest {
 	 
 	    assertEquals(dest.getFirstName(), "ANESU");
 	    assertEquals(dest.getGender(), Gender.MALE);
-	}
+	}*/
 
 }
