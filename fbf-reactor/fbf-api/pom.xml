@@ -17,7 +17,7 @@
 		<spring.version>4.3.1.RELEASE</spring.version>
 		<springsecurity.version>4.1.1.RELEASE</springsecurity.version>
 		<springsecurityoauth2.version>2.0.10.RELEASE</springsecurityoauth2.version>
-		<jackson.version>2.7.5</jackson.version>
+		<jackson.version>2.13.4.1</jackson.version>
 		<logback.version>1.1.7</logback.version>
 		<javax-validation.version>1.1.0.Final</javax-validation.version>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
